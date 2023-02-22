@@ -1,0 +1,25 @@
+
+html, body, .container-fluid, .content-row {
+    height: 100%;
+}
+
+/*.hide {
+    display: none;
+}*/
+
+.city-btn:hover {
+    background-color: #f6f5f5;
+    cursor: pointer;
+}
+
+.card-body {
+    background-color: #cce5ff;
+  margin: 5px;
+  border-radius: 5px;
+}
+#navigator {
+
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+font-style: oblique;
+color: honeydew;
+}
