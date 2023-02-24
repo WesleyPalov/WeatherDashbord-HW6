@@ -2,7 +2,7 @@
 
 Third-party APIs has been used to access data and by making requests with specific parameters to a URL. A weather dashboard has been build to run in the browser and feature dynamically updated HTML and CSS.
 
-Used the [5 Day Weather Forecast](https://openweathermap.org/forecast5) to retrieve weather data for cities. The base URL should look like the following: `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}`.
+Used the [5 Day Weather Forecast](https://openweathermap.org/forecast5) to retrieve weather data for cities.
 
 LocalStorage has been used to store any persistent data.
 
@@ -32,6 +32,8 @@ Humidity
 Wind speed
 
 UV index
+
+Feels like
 
 Includes a search history so that users can access their past search terms. Clicking on the city name performs a new search that returns current and future conditions for that city.
 
