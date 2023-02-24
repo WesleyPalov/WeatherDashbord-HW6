@@ -16,7 +16,7 @@ var weatherContent = $("#weather-content");
 var currentDate = moment().format('L');
 $("#current-date").text("(" + currentDate + ")");
 
-console.log(currentDate);
+
 // Get access to the OpenWeather API
 var urlWeather =  "https://api.openweathermap.org/data/2.5/weather?q=";
 var APIkey = "5806b5e472a87f66457f7aa46221f33b"
@@ -72,8 +72,21 @@ function currentWeatherRequest(searchValue) {
 
         console.log(forecastURL);
         // beginning of 5 days forcast
+        $.ajax({
+            url: forecastURL,
+            method: "GET"
+        }).then(function(response){
+            console.log(response);
+            $('#five-day-forecast').empty();
+            for (var i = 1; i < response.list.length; i+=8) {
     
+                var forecastDateString = moment(response.list[i].dt_txt).format("L");
+                console.log(forecastDateString);
+                     var tempForcast = moment(response.list[i].main.temp)
+                     console.log(tempForcast);
 
+
+            }});
 
 // end of 5 days forcast
 }
@@ -119,9 +132,13 @@ renderCities();
 clearHistoryButton.on("click", function(){
     // Empty out the  city list array
     locStor = [];
-    //localStorage.clear();
+    localStorage.clear();
     ///searchHistoryList.empty();
-
+    localStorage.setItem("cityName",  JSON.stringify(locStor));
+    // hides clear btn
+        clearHistoryButton.addClass("hide");
+        // hides the weather main section
+        weatherContent.addClass("hide");
     console.log(locStor);
     renderCities();
     // Update city list history in local storage
@@ -136,7 +153,7 @@ console.log(locStor);
 searchHistoryList.on("click",".city-btn", function(event) {
     var value = event.target.innerText
     console.log(value);
-    // console.log($(this).data("value"));
+        // console.log($(this).data("value"));
 
     currentWeatherRequest(value);
    // searchHistory(value); 
