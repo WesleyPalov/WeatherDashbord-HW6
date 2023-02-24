@@ -7,6 +7,7 @@ var currentCity = $("#current-city");
 var currentTemp = $("#current-temp");
 var currentHumidity = $("#current-humidity");
 var currentWindSpeed = $("#current-wind-speed");
+var currentFeels = $("#current-feels");
 var UVindex = $("#uv-index");
 // storing local storage 
 var locStor;
@@ -25,15 +26,16 @@ searchCityButton.on("click", function (event){
     event.preventDefault();
     var searchValue = searchCityInput.val().trim();
     if (searchValue === "") {
-    alert("Please enter City name know the current weather");
-   } else
-   console.log(searchValue);
+    alert("Please enter City name to know the current weather");
+   } 
+  // console.log(searchValue);
     currentWeatherRequest(searchValue);
    locStor.push(searchValue);
    weatherContent.removeClass("hide");
    clearHistoryButton.removeClass("hide");
    toLocalStore();
    renderCities();
+   
 })
 
 function currentWeatherRequest(searchValue) {
@@ -44,16 +46,23 @@ function currentWeatherRequest(searchValue) {
         url: queryURL,
         method: "GET"
     }).then(function(response){
-       // console.log(queryURL);
+        console.log(response.cod);
+       
+     //  if (response.cod !== 200) {
+      //  alert("Please enter valid city name")
+      // } else
+       
         currentCity.text(response.name);
         currentCity.append("<small class='text-muted' id='current-date'>");
         $("#current-date").text("(" + currentDate + ")");
         currentCity.append("<img src='https://openweathermap.org/img/w/" + response.weather[0].icon + ".png' alt='" + response.weather[0].main + "' />" )
         currentTemp.text(response.main.temp);
         currentTemp.append("&deg;F");
-        currentHumidity.text(response.main.humidity + "%");
-        currentWindSpeed.text(response.wind.speed + "MPH");
-
+        currentHumidity.text(response.main.humidity + " %");
+        currentWindSpeed.text(response.wind.speed + " MPH");
+        currentFeels.text(response.main.feels_like);
+        currentFeels.append(" &deg;F");
+     //   console.log(response.main.feels_like);
         var lat = response.coord.lat;
         var lon = response.coord.lon;
               
@@ -70,21 +79,25 @@ function currentWeatherRequest(searchValue) {
         });
         var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?&units=imperial&appid=" + APIkey + "&lat=" + lat +  "&lon=" + lon;
 
-        console.log(forecastURL);
+     
         // beginning of 5 days forcast
         $.ajax({
             url: forecastURL,
             method: "GET"
         }).then(function(response){
-            console.log(response);
+            console.log(response.list);
             $('#five-day-forecast').empty();
             for (var i = 1; i < response.list.length; i+=8) {
     
                 var forecastDateString = moment(response.list[i].dt_txt).format("L");
                 console.log(forecastDateString);
-                     var tempForcast = moment(response.list[i].main.temp)
-                     console.log(tempForcast);
-
+                forecastIcon.attr("src", "https://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png");
+                 
+                var tempForcast =(response.list[i].main.temp)
+                    console.log(tempForcast);
+       
+                 var humForcast = (response.list[i].main.humidity)
+                console.log(humForcast);
 
             }});
 
@@ -92,21 +105,11 @@ function currentWeatherRequest(searchValue) {
 }
 )}; 
 
-
-
-
-
-
-
-
-
-
-
-
+// saves city name to the local storage
 function toLocalStore(){
 localStorage.setItem("cityName",  JSON.stringify(locStor));
 }
-
+// extractx city name from local storage
 function fromLocalStore() {
 
     var arr = localStorage.getItem("cityName");
@@ -117,6 +120,7 @@ function fromLocalStore() {
         locStor = [];
      }
 }
+// Dynamically creates list of saved cities 
 function renderCities() {
     var tempTop = '<li class="list-group-item"> <button class="btn btn-info city-btn"  type="button" >'
     var tempBut = "</button> </li>"
@@ -130,33 +134,22 @@ searchHistoryList.append(finalTem);
 fromLocalStore()
 renderCities();
 clearHistoryButton.on("click", function(){
-    // Empty out the  city list array
-    locStor = [];
-    localStorage.clear();
-    ///searchHistoryList.empty();
-    localStorage.setItem("cityName",  JSON.stringify(locStor));
-    // hides clear btn
-        clearHistoryButton.addClass("hide");
-        // hides the weather main section
-        weatherContent.addClass("hide");
-    console.log(locStor);
-    renderCities();
-    // Update city list history in local storage
-    //listArray();
-    
-  //  $(this).addClass("hide");
-})
-console.log(locStor);
+// Empty out the  city list array
+locStor = [];
+localStorage.clear();
+     //searchHistoryList.empty();
+localStorage.setItem("cityName",  JSON.stringify(locStor));
+     // hides clear btn
+clearHistoryButton.addClass("hide");
+     // hides the weather main section
+weatherContent.addClass("hide");
 
+renderCities();
+})
 // Clicking on a button in the search history sidebar
 // will populate the dashboard with info on that city
 searchHistoryList.on("click",".city-btn", function(event) {
-    var value = event.target.innerText
-    console.log(value);
-        // console.log($(this).data("value"));
-
-    currentWeatherRequest(value);
-   // searchHistory(value); 
-
+var value = event.target.innerText
+currentWeatherRequest(value);
 });
 
