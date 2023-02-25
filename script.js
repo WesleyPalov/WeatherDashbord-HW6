@@ -75,7 +75,9 @@ var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchValu
                 console.log(forecastDateString);
                 var tempForcast =(response.list[i].main.temp)
                 var humForcast = (response.list[i].main.humidity)
-                console.log(tempForcast);
+                var windForcast = (response.list[i].wind.speed)
+                console.log(windForcast);
+                //console.log(tempForcast);
                 var cardTemplate = $("<div>");
                 cardTemplate.addClass("col-2");
                 cardTemplate.append(`
@@ -85,6 +87,7 @@ var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchValu
                 <img src='https://openweathermap.org/img/w/${response.list[i].weather[0].icon}.png' alt='${response.list[i].weather[0].main}'/>
                 <p class="card-text">Temp: ${tempForcast}  &deg;F </p>
                 <p class="card-text">Humidity: ${humForcast} % </p>
+                <p class="card-text">Wind: ${windForcast} MPH</p>
                 </div>
             </div>
                 `)
