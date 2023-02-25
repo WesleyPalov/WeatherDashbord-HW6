@@ -49,8 +49,9 @@ Humidity
 
 Uses localStorage to bring up last searched city forecast and search history on page load).
 ![Captureweather](https://user-images.githubusercontent.com/122843028/221323492-9d25d4c0-5011-4a0a-b01c-c1b3ba2b0ea0.PNG)
-![Captureweathe1](https://user-images.githubusercontent.com/122843028/221323523-465bc331-5206-4f0f-b536-b049f5c1b9d8.PNG)
-![Captureweather2](https://user-images.githubusercontent.com/122843028/221323545-5833390f-2854-40a6-a86c-cb12b6fd8134.PNG)
+![Capturewind](https://user-images.githubusercontent.com/122843028/221325426-f50a089a-59b5-4bd6-963b-4051a4bb1d9c.PNG)
+![Captureglas](https://user-images.githubusercontent.com/122843028/221325472-4248ca6d-56cf-4aba-89a5-f48f0a2cb8ff.PNG)
+
 
 
 
